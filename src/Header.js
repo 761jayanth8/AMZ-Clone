@@ -1,70 +1,63 @@
 import React from 'react';
-import "./Header.css";
+import './Header.css';
 import { Link } from 'react-router-dom';
-import SearchIcon from "@mui/icons-material/Search";
+import SearchIcon from '@mui/icons-material/Search';
 import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
-import { useStateValue } from './StateProvider';
-import { auth } from "./firebase";
 
 function Header() {
-  const [{ basket, user }] = useStateValue();
-
-  const login = () => {
-    if (user) {
-      auth.signOut();
-    }
-  };
-
   return (
-    <div>
-      {/* logo on the left */}
-      <nav className="header">
-        <Link to="/">
-          <img
-            className="header__logo"
-            src="http://pngimg.com/uploads/amazon/amazon_PNG11.png"
-            alt=""
-          />
+    <div className="header">
+      {/* Amazon Logo */}
+      <Link to="/">
+        <img
+          className="header__logo"
+          src="http://pngimg.com/uploads/amazon/amazon_PNG11.png"
+          alt="Amazon Logo"
+        />
+      </Link>
+
+      {/* Location Info */}
+      <div className="header__location">
+        <span className="header__locationLineOne">Delivering --</span>
+        <span className="header__locationLineTwo">Update location</span>
+      </div>
+
+      {/* Search Box */}
+      <div className="header__search">
+        <select className="header__searchDropdown">
+          <option value="all">All</option>
+        </select>
+        <input type="text" className="header__searchInput" placeholder="Search Amazon.in" />
+        <SearchIcon className="header__searchIcon" />
+      </div>
+
+      {/* Navigation Links */}
+      <div className="header__nav">
+        {/* Account & Lists */}
+        <Link to="/Login" className="header__link">
+          <div className="header__option">
+            <span className="header__optionLineOne">Hello, sign in</span>
+            <span className="header__optionLineTwo">Account & Lists</span>
+          </div>
         </Link>
-        {/* search box */}
-        <div className='header__search'>
-          <input type="text" className='header__searchInput' />
-          <SearchIcon className='header__searchIcon' />
-        </div>
-        {/* 3 Links */}
-        <div className='header__nav'>
-          {/* 1st link */}
-          <Link to={!user && "/login"} className='header__link'>
-            <div onClick={login} className='header__option'>
-              <span className='header__optionLineOne'>Hello {user?.email}</span>
-              <span className='header__optionLineTwo'>{user ? "Sign Out" : "Sign In"}</span>
-            </div>
-          </Link>
-          {/* 2nd link */}
-          <Link to="/" className='header__link'>
-            <div className='header__option'>
-              <span className='header__optionLineOne'>Returns</span>
-              <span className='header__optionLineTwo'>& Orders</span>
-            </div>
-          </Link>
-          {/* 3rd link */}
-          <Link to="/" className='header__link'>
-            <div className='header__option'>
-              <span className='header__optionLineOne'>Your</span>
-              <span className='header__optionLineTwo'>Prime</span>
-            </div>
-          </Link>
-          {/* 4th link */}
-          <Link to="checkout" className='header__link'>
-            <div className='header__optionBasket'>
-              {/* shopping basket icon */}
-              <ShoppingBasketIcon />
-              {/* Number of items in the basket */}
-              <span className='header__optionLineTwo header__basketCount'>{basket?.length}</span>
-            </div>
-          </Link>
-        </div>
-      </nav>
+
+        {/* Returns & Orders */}
+        <Link to="/Product" className="header__link">
+          <div className="header__option">
+            <span className="header__optionLineOne">Product</span>
+            <span className="header__optionLineTwo">& Orders</span>
+          </div>
+        </Link>
+
+        {/* Cart */}
+        <Link to="/checkout" className="header__link">
+          <div className="header__optionBasket">
+            <ShoppingBasketIcon />
+            <span className="header__optionLineTwo header__basketCount">0</span>
+            <span className="header__optionLineTwo">Cart</span>
+          </div>
+        </Link>
+      </div>
     </div>
   );
 }
