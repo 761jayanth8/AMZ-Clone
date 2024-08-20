@@ -34,12 +34,12 @@ function App() {
   console.log("User is >>>", user);
 
   return (
-    <Router>
+    <Router basename="/AMZ-Clone">
       <div className="app">
         <Routes>
           <Route path="/checkout" element={<><Header /><Checkout /></>} />
           <Route path="/login" element={<Login />} />
-          <Route path="/AMZ-Clone" element={<><Header /><Home /></>} />
+          <Route path="/" element={<><Header /><Home /></>} />
         </Routes>
       </div>
     </Router>
